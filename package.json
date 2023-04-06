@@ -1,0 +1,40 @@
+{
+  "name": "nmtn",
+  "version": "0.0.1",
+  "description": "Tiny animation library designed with simplicity and modernity at its core",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:esbuild": "ts-node build.ts",
+    "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "esbuild": "^0.17.15",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creasty/nmtn.git"
+  },
+  "keywords": [
+    "animation",
+    "easing",
+    "spring",
+    "tween",
+    "typescript"
+  ],
+  "author": "creasty <yuki@creasty.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creasty/nmtn/issues"
+  },
+  "homepage": "https://github.com/creasty/nmtn#readme"
+}
