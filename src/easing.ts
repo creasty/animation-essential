@@ -24,9 +24,7 @@ export const Easing = Object.freeze({
   Sine: buildTriple((t) => 1 - cos((t * PI) / 2)),
   Expo: buildTriple((t) => (t === 0 ? 0 : pow(1024, t - 1))),
   Circ: buildTriple((t) => 1 - sqrt(1 - t * t)),
-  Elastic: buildTriple((t) =>
-    t === 0 ? 0 : -pow(1024, t - 1) * sin((t - 1.1) * 5 * PI)
-  ),
+  Elastic: buildTriple((t) => (t === 0 ? 0 : -pow(1024, t - 1) * sin((t - 1.1) * 5 * PI))),
   Back: buildTriple((t) => t * t * ((BACK.strength + 1) * t - BACK.strength)),
   Bounce: buildTriple((t) => {
     if (t === 1 || t === 0) return t;
@@ -49,9 +47,7 @@ export function mirroredEasing(easing: EasingFunc): EasingFunc {
 }
 
 function buildTriple(easing: EasingFunc, reversed = false) {
-  const [easeIn, easeOut] = reversed
-    ? [reversedEasing(easing), easing]
-    : [easing, reversedEasing(easing)];
+  const [easeIn, easeOut] = reversed ? [reversedEasing(easing), easing] : [easing, reversedEasing(easing)];
   return {
     In: easeIn,
     Out: easeOut,

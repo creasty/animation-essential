@@ -11,12 +11,33 @@
   "scripts": {
     "build": "run-p build:*",
     "build:esbuild": "ts-node build.ts",
-    "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist"
+    "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist",
+    "lint": "run-p -lc --aggregate-output 'lint:*'",
+    "lint:eslint": "eslint --color --cache './**/*.{js,jsx,ts,tsx}'",
+    "lint:prettier": "prettier --color --check './**/*.{js,jsx,ts,tsx,json,css,html}'",
+    "format": "run-s 'format:*'",
+    "format:eslint": "yarn lint:eslint --fix",
+    "format:prettier": "yarn lint:prettier --write",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
     "esbuild": "^0.17.15",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.7",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.3"
   },

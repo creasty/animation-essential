@@ -1,11 +1,6 @@
 import { EasingFunc } from "./easing";
 
-export function cubicBezier(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number
-): EasingFunc {
+export function cubicBezier(x1: number, y1: number, x2: number, y2: number): EasingFunc {
   return (t) => {
     if (x1 == y1 && x2 == y2) return t; // Linear
     const x = solveForT(t, x1, x2);
