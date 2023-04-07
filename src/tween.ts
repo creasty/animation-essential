@@ -1,4 +1,5 @@
-type EasingFunc = (t: number) => number;
+import { Easing, EasingFunc } from "./easing";
+
 type RunCallback = (t: number) => void;
 type Callback = () => void;
 
@@ -6,7 +7,7 @@ class Tween {
   #t?: number;
   #startTime: number;
   #endTime: number;
-  #easingFunc: EasingFunc = (t) => t;
+  #easingFunc: EasingFunc = Easing.Linear;
   #hasStarted = false;
 
   #startCallbacks: Callback[] = [];
