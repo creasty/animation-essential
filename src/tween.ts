@@ -1,4 +1,5 @@
 import { Easing, EasingFunc } from "./easing";
+import { clamp } from "./interpolation";
 
 type RunCallback = (t: number) => void;
 type Callback = () => void;
@@ -38,7 +39,7 @@ class Tween {
   }
 
   update(time: number) {
-    const t = Math.min(Math.max(0, (time - this.#startTime) / (this.#endTime - this.#startTime)), 1);
+    const t = clamp((time - this.#startTime) / (this.#endTime - this.#startTime), 0, 1);
     if (this.#t === t) return;
     if (!this.#t || this.#t > t) this.#hasStarted = false;
     this.#t = t;
@@ -125,7 +126,7 @@ class TweenSequence {
   }
 
   update(time: number) {
-    const t = Math.min(Math.max(0, time / this.context.offset), 1);
+    const t = clamp(time / this.context.offset, 0, 1);
     if (this.#t === t) return;
     if (!this.#t || this.#t > t) this.#hasStarted = false;
     this.#t = t;
