@@ -6,6 +6,6 @@
     "strict": true,
     "lib": ["es2020", "dom"]
   },
-  "include": ["./src/**/*", "build.ts"],
+  "include": ["./src/**/*", "./build.ts", "./jest.config.ts"],
   "exclude": ["node_modules"]
 }
