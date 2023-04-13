@@ -11,7 +11,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:esbuild": "ts-node build.ts",
-    "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist",
+    "build:types": "tsc -P tsconfig.build.json --declaration --emitDeclarationOnly --outFile dist/index.d.ts",
     "test": "jest",
     "lint": "run-p -lc --aggregate-output 'lint:*'",
     "lint:eslint": "eslint --color --cache './**/*.{js,jsx,ts,tsx}'",
