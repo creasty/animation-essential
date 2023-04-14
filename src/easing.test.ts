@@ -1,10 +1,11 @@
-import { Easing, mirroredEasing, reversedEasing } from "./easing";
+import { Easing, EasingFunc, mirroredEasing, reversedEasing } from "./easing";
 
 const ts = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+const dummyEasingFunc: EasingFunc = (t) => t * 0.5;
 
 describe("reversedEasing", () => {
   test("returns a reversed function", () => {
-    const fn = reversedEasing((t) => t * 0.5);
+    const fn = reversedEasing(dummyEasingFunc);
     expect(ts.map(fn)).toMatchInlineSnapshot(`
       [
         0.5,
@@ -25,7 +26,7 @@ describe("reversedEasing", () => {
 
 describe("mirroredEasing", () => {
   test("returns a mirrored function", () => {
-    const fn = mirroredEasing((t) => t * 0.5);
+    const fn = mirroredEasing(dummyEasingFunc);
     expect(ts.map(fn)).toMatchInlineSnapshot(`
       [
         0,

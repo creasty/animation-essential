@@ -142,7 +142,15 @@ class TweenSequence {
   }
 }
 
-export function tween(dsl: (t: TweenSequence) => void) {
+export type { TweenSequence, Tween };
+
+/**
+ * Create a tween sequence
+ *
+ * @params dsl - A function that takes a tween sequence as an argument.
+ * @returns {TweenSequence} A tween sequence.
+ */
+export function tween(dsl: (t: TweenSequence) => void): TweenSequence {
   const sequence = new TweenSequence({
     offset: 0,
     tweens: [],

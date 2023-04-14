@@ -5,6 +5,13 @@ type Config = {
   fps: number;
 };
 
+const defaultConfig: Config = {
+  stiffness: 200,
+  damping: 10,
+  precision: 1e-6,
+  fps: 60,
+};
+
 type State = {
   terminal: number;
   velocity: number;
@@ -92,16 +99,30 @@ class SpringObject<T> {
   };
 }
 
+/**
+ * A configuration of a spring function.
+ *
+ * @property {number} stiffness - The stiffness of the spring. Defaults to 200.
+ * @property {number} damping - The damping of the spring. Defaults to 10.
+ * @property {number} precision - The precision of the spring. Defaults to 1e-6.
+ * @property {number} fps - The frame rate used to animate the spring. Defaults to 60.
+ */
 export type SpringConfig = Partial<Config>;
+
+/**
+ * A spring object that can be used to animate values.
+ * Only numeric values can be animated.
+ */
 export type Spring<T> = Values<T> & InstanceType<typeof SpringObject<T>>;
 
-const defaultConfig: Config = {
-  stiffness: 200,
-  damping: 10,
-  precision: 1e-6,
-  fps: 60,
-};
-
+/**
+ * Creates a spring object that can be used to animate values.
+ *
+ * @typeparam T - The type of the object being animated.
+ * @param {T} obj - The object to animate.
+ * @param {SpringConfig} config - The configuration of the spring.
+ * @returns {Spring<T>} A spring object that can be used to animate values.
+ */
 export function spring<T>(obj: T, config: SpringConfig = {}): Spring<T> {
   const spring = new SpringObject(obj, {
     ...defaultConfig,

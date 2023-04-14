@@ -1,3 +1,9 @@
+/**
+ * A function type that applies easing to a value.
+ *
+ * @param {number} t - The current time value such that [0, 1]
+ * @returns {number} The eased value such that [0, 1]
+ */
 export type EasingFunc = (t: number) => number;
 
 const BACK = {
@@ -15,6 +21,9 @@ const BOUNCE = {
 
 const { sin, cos, PI, sqrt, pow } = Math;
 
+/**
+ * A collection of easing functions.
+ */
 export const Easing = Object.freeze({
   Linear: (t: number) => t,
   Quad: buildTriple((t) => t * t),
@@ -38,19 +47,31 @@ export const Easing = Object.freeze({
   }, true),
 });
 
+/**
+ * Returns a reversed easing function.
+ *
+ * @param {EasingFunc} easing - The easing function to reverse.
+ * @returns {EasingFunc} The reversed easing function.
+ */
 export function reversedEasing(easing: EasingFunc): EasingFunc {
   return (t) => 1 - easing(1 - t);
 }
 
+/**
+ * Returns a mirrored easing function.
+ *
+ * @param {EasingFunc} easing - The easing function to mirror.
+ * @returns {EasingFunc} The mirrored easing function.
+ */
 export function mirroredEasing(easing: EasingFunc): EasingFunc {
   return (t) => (t < 0.5 ? easing(2 * t) * 0.5 : 1 - easing(2 * (1 - t)) * 0.5);
 }
 
 function buildTriple(easing: EasingFunc, reversed = false) {
   const [easeIn, easeOut] = reversed ? [reversedEasing(easing), easing] : [easing, reversedEasing(easing)];
-  return {
+  return Object.freeze({
     In: easeIn,
     Out: easeOut,
     InOut: mirroredEasing(easeIn),
-  };
+  });
 }

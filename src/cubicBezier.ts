@@ -1,5 +1,14 @@
 import { EasingFunc } from "./easing";
 
+/**
+ * Create a cubic bezier easing function.
+ *
+ * @param {number} x1 - The x coordinate of the first control point.
+ * @param {number} y1 - The y coordinate of the first control point.
+ * @param {number} x2 - The x coordinate of the second control point.
+ * @param {number} y2 - The y coordinate of the second control point.
+ * @returns {EasingFunc} The cubic bezier easing function.
+ */
 export function cubicBezier(x1: number, y1: number, x2: number, y2: number): EasingFunc {
   return (t) => {
     if (x1 == y1 && x2 == y2) return t; // Linear
