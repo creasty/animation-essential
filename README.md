@@ -46,36 +46,16 @@ steppingMix(2.5, (t) => t * t); // Returns 2.25
 Easing functions are predefined so that can be used to apply various easing effects to your animations. The available preset are:
 
 - `Easing.Linear`
-- `Easing.Quad.In`
-- `Easing.Quad.Out`
-- `Easing.Quad.InOut`
-- `Easing.Cubic.In`
-- `Easing.Cubic.Out`
-- `Easing.Cubic.InOut`
-- `Easing.Quart.In`
-- `Easing.Quart.Out`
-- `Easing.Quart.InOut`
-- `Easing.Quint.In`
-- `Easing.Quint.Out`
-- `Easing.Quint.InOut`
-- `Easing.Sine.In`
-- `Easing.Sine.Out`
-- `Easing.Sine.InOut`
-- `Easing.Expo.In`
-- `Easing.Expo.Out`
-- `Easing.Expo.InOut`
-- `Easing.Circ.In`
-- `Easing.Circ.Out`
-- `Easing.Circ.InOut`
-- `Easing.Elastic.In`
-- `Easing.Elastic.Out`
-- `Easing.Elastic.InOut`
-- `Easing.Back.In`
-- `Easing.Back.Out`
-- `Easing.Back.InOut`
-- `Easing.Bounce.In`
-- `Easing.Bounce.Out`
-- `Easing.Bounce.InOut`
+- `Easing.Quad.In` / `Easing.Quad.Out` / `Easing.Quad.InOut`
+- `Easing.Cubic.In` / `Easing.Cubic.Out` / `Easing.Cubic.InOut`
+- `Easing.Quart.In` / `Easing.Quart.Out` / `Easing.Quart.InOut`
+- `Easing.Quint.In` / `Easing.Quint.Out` / `Easing.Quint.InOut`
+- `Easing.Sine.In` / `Easing.Sine.Out` / `Easing.Sine.InOut`
+- `Easing.Expo.In` / `Easing.Expo.Out` / `Easing.Expo.InOut`
+- `Easing.Circ.In` / `Easing.Circ.Out` / `Easing.Circ.InOut`
+- `Easing.Elastic.In` / `Easing.Elastic.Out` / `Easing.Elastic.InOut`
+- `Easing.Back.In` / `Easing.Back.Out` / `Easing.Back.InOut`
+- `Easing.Bounce.In` / `Easing.Bounce.Out` / `Easing.Bounce.InOut`
 
 The easing module also includes two functions that can be used to manipulate easing functions:
 
@@ -90,7 +70,7 @@ Easing.Quad.Out(0.5); // Returns 0.75
 reversedEasing(Easing.Quad.Out)(0.5); // Returns 0.25
 Easing.Quad.In(0.5); // Equivalent as above
 
-mirroredEasing(Easing.Quad.Out)(0.5); // Returns 0.5
+mirroredEasing(Easing.Quad.In)(0.5); // Returns 0.5
 Easing.Quad.InOut(0.5); // Equivalent as above
 ```
 
