@@ -1,4 +1,12 @@
-import { clamp, lerp, smoothStep, steppingMix } from "./interpolation";
+import { clamp, lerp, smoothStep, fractionalMix, multiPointLerp } from "./interpolation";
+
+function generateArray(start: number, end: number, step: number) {
+  const result = [];
+  for (let i = start; i <= end; i += step) {
+    result.push(i);
+  }
+  return result;
+}
 
 describe("clamp", () => {
   test("clamps a value between a min and max", () => {
@@ -44,24 +52,36 @@ describe("smoothStep", () => {
   });
 });
 
-describe("steppingMix", () => {
-  test.each([
-    [0.0, 1.0],
-    [0.1, 0.9],
-    [0.2, 0.8],
-    [0.8, 0.2],
-    [0.9, 0.1],
-    [1.0, 2.0],
-    [1.1, 1.9],
-    [1.2, 1.8],
-    [1.8, 1.2],
-    [1.9, 1.1],
-    [2.0, 3.0],
-    [2.1, 2.9],
-    [2.2, 2.8],
-    [2.8, 2.2],
-    [2.9, 2.1],
-  ])("steppingMix(%f, (t) => 1 - t) returns %f", (v, expected) => {
-    expect(steppingMix(v, (t) => 1 - t)).toBeCloseTo(expected);
+describe("multiPointLerp", () => {
+  test("requires at least two points", () => {
+    expect(() => {
+      multiPointLerp([], 0);
+    }).toThrowError(TypeError);
+    expect(() => {
+      multiPointLerp([0], 0);
+    }).toThrowError(TypeError);
+    expect(() => {
+      multiPointLerp([0, 1], 0);
+    }).not.toThrowError(TypeError);
+  });
+
+  test("interpolates between two values", () => {
+    const ts = generateArray(0, 1, 0.1);
+    const points = [1, 9];
+    expect(ts.map((t) => multiPointLerp(points, t))).toMatchSnapshot();
+  });
+
+  test("interpolates between two consecutive values in multiple points", () => {
+    const ts = generateArray(0, 3, 0.1);
+    const points = [1, 20, 300, 4000];
+    expect(ts.map((t) => multiPointLerp(points, t))).toMatchSnapshot();
+  });
+});
+
+describe("fractionalMix", () => {
+  test("applies the mix function only to the fractional part of input", () => {
+    const values = generateArray(0, 3, 0.1);
+    const mixFunc = (t: number) => t * t;
+    expect(values.map((v) => fractionalMix(v, mixFunc))).toMatchSnapshot();
   });
 });

@@ -30,15 +30,17 @@ The interpolation module provides a set of functions that can be used to calcula
 - `clamp`: Clamps a value to be within a given range.
 - `lerp`: Linearly interpolates between two values.
 - `smoothStep`: Calculates a smooth step function with an easing effect.
-- `steppingMix`: Combines the integer part of an input value with the result of applying a mix function to its decimal part.
+- `multiPointLerp`: Linearly interpolates between two consecutive values in the points given in array.
+- `fractionalMix`: Combines the integer part of an input value with the result of applying a mix function to its decimal part.
 
 ```typescript
-import { clamp, lerp, smoothStep, steppingMix } from "animation-essential";
+import { clamp, lerp, smoothStep, multiPointLerp, fractionalMix } from "animation-essential";
 
 clamp(1.5, 0, 1); // Returns 1
 lerp(0, 100, 0.5); // Returns 50
 smoothStep(0, 1, 0.5); // Returns 0.5
-steppingMix(2.5, (t) => t * t); // Returns 2.25
+multiPointLerp([1, 20, 300, 4000], 2.5); // Returns 160
+fractionalMix(2.5, (t) => t * t); // Returns 2.25
 ```
 
 ### Easing

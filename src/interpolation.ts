@@ -17,7 +17,7 @@ export function clamp(v: number, min: number, max: number): number {
  *
  * @param {number} a - The first value.
  * @param {number} b - The second value.
- * @param {number} t - The interpolation factor.
+ * @param {number} t - The interpolation factor between 0 and 1.
  * @returns {number} The interpolated value.
  */
 export function lerp(a: number, b: number, t: number): number {
@@ -38,13 +38,32 @@ export function smoothStep(a: number, b: number, x: number): number {
 }
 
 /**
- * Combines the integer part of an input value with the result of applying a mix function to its decimal part.
+ * Linearly interpolates between two consecutive values in the points given in array.
+ *
+ * @param {number[]} points - The array of points. Must have at least two elements.
+ * @param {number} t - The interpolation factor between 0 and [the number of points] - 1.
+ * @returns {number} The interpolated value.
+ */
+export function multiPointLerp(points: number[], t: number): number {
+  const l = points.length;
+  if (l < 2) throw new TypeError("multiPointLerp requires at least two points");
+
+  t = clamp(t, 0, l - 1);
+  const intPart = Math.floor(t);
+  const fracPart = t - intPart;
+  return lerp(points[intPart], points[Math.min(intPart + 1, l - 1)], fracPart);
+}
+
+/**
+ * Combines the integer part of an input value with the result of applying a mix function to its fractional part.
+ * It comes in very handy when used with {@link multiPointLerp}.
  *
  * @param {number} v - The input value.
  * @param {function} mix - The mix function.
  * @returns {number} The mixed value.
  */
-export function steppingMix(v: number, mix: (t: number) => number): number {
-  const s = Math.floor(v);
-  return s + mix(v - s);
+export function fractionalMix(v: number, mix: (t: number) => number): number {
+  const intPart = Math.floor(v);
+  const fracPart = v - intPart;
+  return intPart + mix(fracPart);
 }
