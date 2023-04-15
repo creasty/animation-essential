@@ -126,10 +126,14 @@ const testObject = {
 
 // Create a spring object
 const springObject = spring(testObject);
-requestAnimationFrame(() => {
+
+// Start animation
+const animate = () => {
   springObject.update();
   console.log({ ...testObject }); // Values of testObject will be animated
-});
+  requestAnimationFrame(animate);
+};
+animate();
 
 // Update properties
 springObject.sampleNumber = 100;
@@ -172,5 +176,9 @@ const t = tween((t) => {
 });
 
 // Start the tween
-requestAnimationFrame(() => t.update());
+const animate = () => {
+  t.update();
+  requestAnimationFrame(animate);
+};
+animate();
 ```
