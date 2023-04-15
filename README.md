@@ -4,6 +4,15 @@
 
 `animation-essential` is a lightweight and modern animation library designed to simplify your animation needs. The library features an intuitive and easy-to-use API that allows you to create smooth and fluid animations effortlessly.
 
+It is highly flexible and can be integrated with any library or framework of your choice such as [three.js](https://github.com/mrdoob/three.js).
+
+## Core Principles
+
+- **TypeScript-first experience**: Provides a well-typed interface that makes it easy to use and work with.
+- **Platform-agnostic**: Designed to work on both the browser and server, without any dependencies on the DOM or browser-only APIs.
+- **Focus on fundamental animation properties**: Representing time and the amount of changes in animated objects with numbers and numbers only.
+- **Separation of clock management**: Allows you to full control over when and how animation should progress.
+
 ## Installation
 
 Getting started with animation-essential is a breeze. You can install the library using the npm package manager:
@@ -126,24 +135,23 @@ function spring<T>(obj: T, config?: SpringConfig): Spring<T>;
 ```typescript
 import { spring } from "animation-essential";
 
-let sampleValue = 0;
-
 const testObject = {
-  get sampleValue() {
-    return sampleValue;
-  },
-  set sampleValue(v) {
-    sampleValue = v;
-    console.log(v);
-  },
+  simpleNumber: 0,
+
+  get posZ() { return mesh.group.position.z; },
+  set posZ(v) { mesh.group.position.z = v; },
 };
 
 // Create a spring object
 const springObject = spring(testObject);
-requestAnimationFrame(() => springObject.update());
+requestAnimationFrame(() => {
+  springObject.update();
+  console.log({ ...testObject }); // Values of testObject will be animated
+});
 
-// Update the property and start animation
-springObject.sampleValue = 100;
+// Update properties
+springObject.sampleNumber = 100;
+springObject.posZ = -50;
 ```
 
 ### Tween
@@ -154,9 +162,9 @@ The tween module allows you to create complex animation sequences using a simple
 import { Easing, tween, lerp } from "animation-essential";
 
 const t = tween((t) => {
-  t.on(200, 2000)
-    .easing(Easing.Cubic.InOut)
-    .run((v) => {
+  t.on(200, 2000) // From 200ms to 2000ms
+    .easing(Easing.Cubic.InOut) // Ease time with Cubic.InOut
+    .run((v) => { // v is [0, 1]
       const maxZ = mainCamera.position.z - mainCamera.near;
       mesh.group.position.z = lerp(maxZ - mesh.size, 0, v);
     });
@@ -171,20 +179,16 @@ const t = tween((t) => {
     .run((v) => {
       mesh.material.ior = lerp(1, initialMaterialParams.ior, v);
     });
+
+  // Lifecycle callbacks
+  t.onStart(() => {
+    console.log("Tween started");
+  });
+  t.onEnd(() => {
+    console.log("Tween ended");
+  });
 });
 
-// Lifecycle callbacks
-t.onStart(() => {
-  state = "intro";
-
-  mesh.group.position.setScalar(0);
-  mesh.group.rotation.y = 0;
-  mesh.group.scale.setScalar(1);
-});
-t.onEnd(() => {
-  state = "idle";
-});
-
-// Start tween
+// Start the tween
 requestAnimationFrame(() => t.update());
 ```
