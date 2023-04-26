@@ -16,7 +16,7 @@ jobs:
       - run: yarn test
       - run: yarn build
 
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v2
         id: publish
         with:
           token: ${{ secrets.NPM_TOKEN }}

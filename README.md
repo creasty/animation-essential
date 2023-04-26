@@ -6,6 +6,8 @@
 
 It is highly flexible and can be integrated with any library or framework of your choice such as [three.js](https://github.com/mrdoob/three.js).
 
+> **Warning** This plugin is currently in the early stage of development. User interface is subject to change without notice.
+
 ## Core Principles
 
 - **TypeScript-first experience**: Provides a well-typed interface that makes it easy to use and work with.
